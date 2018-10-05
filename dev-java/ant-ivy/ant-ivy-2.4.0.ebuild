@@ -1,15 +1,29 @@
 # Copyright 1999-2018 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI="5"
+EAPI="6"
 
 JAVA_PKG_IUSE="doc examples source test"
 
 # Register this as a split-ant task.
 WANT_SPLIT_ANT="true"
 
-# Don't rewrite examples, that's bad.
-JAVA_PKG_BSFIX_ALL="no"
+JAVA_ANT_REWRITE_CLASSPATH="true"
+
+EANT_GENTOO_CLASSPATH="
+	jsch
+	bcpkix-${BC_SLOT}
+	ant-core
+	bcpg-${BC_SLOT}
+	commons-vfs
+	bcprov-${BC_SLOT}
+	jakarta-oro-2.0
+	commons-httpclient-3
+"
+
+EANT_BUILD_TARGET="/offline jar"
+
+EANT_EXTRA_ARGS="-Dbuild.version=${PV} -Dbundle.version=${PV}"
 
 inherit java-pkg-2 java-ant-2 eutils
 
@@ -22,7 +36,7 @@ SRC_URI="mirror://apache/ant/ivy/${PV}/${MY_P}-src.tar.gz"
 
 LICENSE="Apache-2.0"
 SLOT="2"
-KEYWORDS="amd64 ppc64 x86 ~amd64-linux ~x86-linux ~x86-macos"
+KEYWORDS="-amd64 -ppc64 -x86 -amd64-linux -x86-linux -x86-macos"
 
 # We cannot build tests yet as there is no org.apache.tools.ant.BuildFileTest packaged anywhere yet.
 RESTRICT="test"
@@ -51,7 +65,12 @@ RDEPEND=">=virtual/jre-1.6
 
 S="${WORKDIR}/${MY_P}"
 
-java_prepare() {
+# Don't rewrite examples, that's bad.
+JAVA_PKG_BSFIX_ALL="no"
+
+src_prepare() {
+	eapply_user
+
 	# This stuff needs removing.
 	local CLEANUP=(
 		doc/reports
@@ -67,23 +86,6 @@ java_prepare() {
 	java-ant_rewrite-classpath
 	mkdir lib || die
 }
-
-JAVA_ANT_REWRITE_CLASSPATH="true"
-
-EANT_GENTOO_CLASSPATH="
-	jsch
-	bcpkix-${BC_SLOT}
-	ant-core
-	bcpg-${BC_SLOT}
-	commons-vfs
-	bcprov-${BC_SLOT}
-	jakarta-oro-2.0
-	commons-httpclient-3
-"
-
-EANT_BUILD_TARGET="/offline jar"
-
-EANT_EXTRA_ARGS="-Dbuild.version=${PV} -Dbundle.version=${PV}"
 
 src_test() {
 	java-pkg_jar-from --into lib junit
