@@ -21,4 +21,3 @@ dev-java/ant-junitlauncher 1.10.6: Apache Ant's optional tasks depending on juni
 dev-java/ant-swing 1.9.14 1.10.6: Apache Ant's optional tasks for Swing
 dev-java/ant-testutil 1.9.14 1.10.6: Apache Ant's optional test utility classes
 dev-java/ant-xz 1.10.6: Apache Ant's optional tasks for XZ compression
-dev-util/idea-community 2019.3.193.5233.102: A complete toolset for web, mobile and enterprise development

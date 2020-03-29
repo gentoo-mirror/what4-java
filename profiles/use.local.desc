@@ -22,6 +22,3 @@ dev-java/ant:resolver - Enable Apache Resolver Ant tasks
 dev-java/ant:swing - Enable Swing Ant tasks
 dev-java/ant:testutil - Enable optional test util classes
 dev-java/ant:xz - Enable XZ Ant tasks
-dev-util/idea-community:custom-jdk - Install and use IntelliJ's custom JRE.
-dev-util/idea-community:jbr11 - Install and use the Java 11 based version of JetBrains Runtime.
-dev-util/idea-community:jbr8 - Install and use the Java 8 based version of JetBrains Runtime.
